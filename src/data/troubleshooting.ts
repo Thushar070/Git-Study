@@ -1,0 +1,88 @@
+// ============================================================
+// GitAtlas — Troubleshooting Data
+// ============================================================
+import type { TroubleshootingEntry } from '../types';
+
+export const troubleshootingData: TroubleshootingEntry[] = [
+  {
+    id: 'not-a-git-repo', error: 'fatal: not a git repository (or any of the parent directories): .git', category: 'Setup',
+    whatHappened: 'You ran a Git command outside of a Git repository.',
+    whyItHappened: 'The current directory (and none of its parent directories) contains a .git folder. Git can\'t find a repository to operate on.',
+    howToDiagnose: ['Check your current directory: pwd', 'Look for .git: ls -la .git', 'Navigate up directories to find the repo root'],
+    howToFix: ['Navigate to your repository directory: cd /path/to/your/repo', 'Or initialize a new repository: git init', 'Or clone an existing one: git clone <url>'],
+    commands: ['git init', 'cd <repo-directory>'],
+    commonMistakes: ['Running commands in the wrong terminal/directory.', 'Opening a new terminal that defaults to the home directory.'],
+  },
+  {
+    id: 'branch-behind', error: 'Your branch is behind \'origin/main\' by N commits', category: 'Remote',
+    whatHappened: 'The remote branch has commits that your local branch doesn\'t have.',
+    whyItHappened: 'Someone pushed changes to the remote after your last pull/fetch.',
+    howToDiagnose: ['Run git status to see the message', 'Run git log HEAD..origin/main --oneline to see the missing commits'],
+    howToFix: ['Pull the latest changes: git pull', 'Or fetch and merge: git fetch && git merge origin/main', 'Or rebase: git pull --rebase'],
+    commands: ['git pull', 'git fetch', 'git merge origin/main', 'git rebase origin/main'],
+    commonMistakes: ['Ignoring the warning and pushing without pulling first.', 'Force-pushing instead of integrating.'],
+  },
+  {
+    id: 'non-fast-forward', error: 'error: failed to push some refs (non-fast-forward)', category: 'Remote',
+    whatHappened: 'Your push was rejected because the remote has commits you don\'t have locally.',
+    whyItHappened: 'Someone pushed to the same branch after your last fetch. Your local branch has diverged from the remote.',
+    howToDiagnose: ['Run git fetch origin', 'Run git log --oneline --graph HEAD origin/main'],
+    howToFix: ['Pull and merge: git pull origin main', 'Or pull with rebase: git pull --rebase origin main', 'Then push: git push'],
+    commands: ['git pull --rebase', 'git push'],
+    commonMistakes: ['Using git push --force to override — this can destroy others\' work.', 'Not pulling before pushing.'],
+  },
+  {
+    id: 'merge-conflict', error: 'CONFLICT (content): Merge conflict in <file>', category: 'Merge',
+    whatHappened: 'Both branches modified the same lines of the same file, and Git can\'t automatically determine which version to keep.',
+    whyItHappened: 'You and another developer (or another branch) changed the same code. Git needs human judgment to decide which changes to keep.',
+    howToDiagnose: ['Run git status to see conflicted files', 'Open conflicted files — look for <<<<<<< ======= >>>>>>> markers'],
+    howToFix: ['Open each conflicted file and resolve the markers', 'Remove <<<<<<< ======= >>>>>>> markers and keep the correct code', 'Stage resolved files: git add <file>', 'Complete the merge: git merge --continue (or git commit)'],
+    commands: ['git status', 'git add <resolved-file>', 'git merge --continue', 'git merge --abort', 'git mergetool'],
+    commonMistakes: ['Leaving conflict markers in the code.', 'Not testing after resolving conflicts.', 'Aborting the merge when you\'ve already resolved most conflicts.'],
+  },
+  {
+    id: 'detached-head', error: 'You are in \'detached HEAD\' state', category: 'Branch',
+    whatHappened: 'HEAD is pointing directly at a commit instead of a branch. Any commits you make won\'t belong to any branch.',
+    whyItHappened: 'You checked out a specific commit, tag, or remote-tracking branch instead of a local branch.',
+    howToDiagnose: ['Run git status — it will say "HEAD detached at <commit>"', 'Run git branch — no branch will be marked with *'],
+    howToFix: ['To return to a branch: git switch main', 'To keep work done in detached HEAD: git switch -c new-branch-name', 'To return to where you were: git switch -'],
+    commands: ['git switch main', 'git switch -c <new-branch>', 'git checkout <branch>'],
+    commonMistakes: ['Making commits in detached HEAD and then switching branches — commits become unreachable.', 'Not creating a branch to save work.'],
+  },
+  {
+    id: 'permission-denied', error: 'Permission denied (publickey)', category: 'Auth',
+    whatHappened: 'SSH authentication to the remote server failed.',
+    whyItHappened: 'Your SSH key is not configured correctly, not added to the SSH agent, or not registered with the remote service (GitHub, GitLab, etc.).',
+    howToDiagnose: ['Test SSH: ssh -T git@github.com', 'Check keys: ssh-add -l', 'Verify key exists: ls ~/.ssh/id_*'],
+    howToFix: ['Generate a key if needed: ssh-keygen -t ed25519 -C "your@email.com"', 'Add key to agent: ssh-add ~/.ssh/id_ed25519', 'Add public key to GitHub: Settings → SSH Keys → New', 'Or switch to HTTPS: git remote set-url origin https://github.com/user/repo.git'],
+    commands: ['ssh-keygen -t ed25519', 'ssh-add ~/.ssh/id_ed25519', 'ssh -T git@github.com', 'git remote set-url origin <https-url>'],
+    commonMistakes: ['Not adding the key to the SSH agent.', 'Adding the private key to GitHub instead of the public key (.pub).'],
+  },
+  {
+    id: 'remote-already-exists', error: 'fatal: remote origin already exists', category: 'Remote',
+    whatHappened: 'You tried to add a remote named "origin" but one already exists.',
+    whyItHappened: 'The remote "origin" was already configured (typically set up during git clone or a previous git remote add).',
+    howToDiagnose: ['Check existing remotes: git remote -v'],
+    howToFix: ['Update the URL: git remote set-url origin <new-url>', 'Or remove and re-add: git remote remove origin && git remote add origin <url>'],
+    commands: ['git remote -v', 'git remote set-url origin <url>', 'git remote remove origin'],
+    commonMistakes: ['Trying to add origin when it\'s already set by clone.'],
+  },
+  {
+    id: 'nothing-to-commit', error: 'nothing to commit, working tree clean', category: 'Status',
+    whatHappened: 'Git has no changes to commit — the working directory matches the last commit.',
+    whyItHappened: 'Either no files were modified, or all changes were already committed.',
+    howToDiagnose: ['Run git status for details', 'Check if files were saved in your editor', 'Ensure you\'re in the right directory'],
+    howToFix: ['Make changes to tracked files', 'Or use git add for new untracked files', 'Or use git commit --allow-empty for an empty commit (CI trigger)'],
+    commands: ['git status', 'git add .', 'git commit --allow-empty -m "Trigger CI"'],
+    commonMistakes: ['Forgetting to save files in the editor before committing.', 'Being in the wrong directory.'],
+  },
+  {
+    id: 'untracked-files', error: 'Untracked files: (use "git add <file>..." to include in what will be committed)', category: 'Status',
+    whatHappened: 'Git detected files that aren\'t being tracked. These won\'t be included in commits until you add them.',
+    whyItHappened: 'New files were created that Git hasn\'t been told to track yet.',
+    howToDiagnose: ['Run git status to see untracked files'],
+    howToFix: ['Track them: git add <file>', 'Track all: git add .', 'Ignore them: add to .gitignore'],
+    commands: ['git add <file>', 'git add .'],
+    commonMistakes: ['Adding files that should be ignored (node_modules, .env, build/).', 'Not setting up .gitignore before first commit.'],
+  },
+];
