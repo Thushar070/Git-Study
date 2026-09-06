@@ -15,7 +15,7 @@ export const VisualLab: React.FC = () => {
     <div className="page-container visual-lab-page">
       <div className="page-header">
         <div className="page-title-group">
-          <div className="page-icon-wrapper text-purple">
+          <div className="page-icon-wrapper text-amber">
             <Layers size={28} />
           </div>
           <div>

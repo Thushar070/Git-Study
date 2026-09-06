@@ -49,7 +49,7 @@ export const GitHubOverview: React.FC = () => {
       {/* Quick Setup Card */}
       <div className="gh-setup-card">
         <div className="setup-header">
-          <Key size={20} className="text-purple" />
+          <Key size={20} className="text-amber" />
           <h3>Getting Started with GitHub CLI</h3>
         </div>
         <p>Authenticate your GitHub account directly in your terminal to enable interactive PR creation, review, and issue tracking:</p>
