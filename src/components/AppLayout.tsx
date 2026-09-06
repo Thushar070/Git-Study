@@ -39,7 +39,10 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       <div className="app-body-container">
         {/* Desktop Sidebar & Mobile Drawer */}
         <div className={`sidebar-wrapper ${isSidebarOpenMobile ? 'mobile-open' : ''}`}>
-          <Sidebar onCloseMobile={() => setIsSidebarOpenMobile(false)} />
+          <Sidebar
+            onCloseMobile={() => setIsSidebarOpenMobile(false)}
+            onOpenSearch={() => setIsSearchOpen(true)}
+          />
           {isSidebarOpenMobile && (
             <div
               className="sidebar-backdrop"
