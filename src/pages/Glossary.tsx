@@ -69,24 +69,26 @@ export const Glossary: React.FC = () => {
       </div>
 
       {/* Glossary Stack */}
-      <div className="glossary-grid mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="glossary-grid">
         {filteredGlossary.map((item) => (
-          <div key={item.term} className="glossary-card p-5 bg-surface border border-border rounded-lg">
-            <div className="glossary-card-header mb-2 flex items-center justify-between">
-              <h3 className="glossary-term font-semibold text-lg text-foreground">{item.term}</h3>
+          <div key={item.term} className="glossary-card">
+            <div className="glossary-card-header">
+              <h3 className="glossary-term">{item.term}</h3>
             </div>
 
-            <p className="glossary-def text-muted text-sm mb-3">{item.definition}</p>
+            <p className="glossary-def">{item.definition}</p>
 
             {item.relatedCommands && item.relatedCommands.length > 0 && (
-              <div className="glossary-related flex items-center gap-2 flex-wrap text-xs">
-                <span className="text-muted font-medium">Related commands:</span>
-                {item.relatedCommands.map((cmd) => (
-                  <Link key={cmd} to={`/git/commands/${cmd}`} className="inline-flex items-center gap-1 px-2 py-0.5 bg-background border border-border rounded font-mono text-emerald">
-                    <Terminal size={11} />
-                    <span>{cmd}</span>
-                  </Link>
-                ))}
+              <div className="glossary-related">
+                <span className="related-label">Related commands:</span>
+                <div className="related-badges-group">
+                  {item.relatedCommands.map((cmd) => (
+                    <Link key={cmd} to={`/git/commands/${cmd}`} className="glossary-command-pill">
+                      <Terminal size={11} />
+                      <span>{cmd}</span>
+                    </Link>
+                  ))}
+                </div>
               </div>
             )}
           </div>

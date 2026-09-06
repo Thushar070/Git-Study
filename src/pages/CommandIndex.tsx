@@ -76,7 +76,7 @@ export const CommandIndex: React.FC = () => {
       </div>
 
       {/* Table Directory */}
-      <div className="index-table-wrapper mt-6">
+      <div className="index-table-wrapper">
         <table className="index-table">
           <thead>
             <tr>

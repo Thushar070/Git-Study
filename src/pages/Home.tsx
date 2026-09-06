@@ -95,7 +95,7 @@ export const Home: React.FC = () => {
           <div className="lifecycle-grid">
             <div className="lifecycle-stage stage-working">
               <div className="stage-header">
-                <FileText size={20} className="text-sky" />
+                <FileText size={20} className="text-emerald" />
                 <h3>Working Tree</h3>
               </div>
               <p>Your local modified & untracked files on disk.</p>
@@ -113,7 +113,7 @@ export const Home: React.FC = () => {
 
             <div className="lifecycle-stage stage-local">
               <div className="stage-header">
-                <HardDrive size={20} className="text-purple" />
+                <HardDrive size={20} className="text-subtle" />
                 <h3>Local Repo</h3>
               </div>
               <p>Permanent snapshot database in `.git` directory.</p>
