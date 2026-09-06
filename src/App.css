@@ -2516,9 +2516,141 @@
     overflow-x: auto;
   }
 
-  .command-title {
-    word-break: break-word;
-  }
+  /* ── Danger & Caution Callout Banners ──────────────────── */
+.danger-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  margin-bottom: var(--space-6);
+}
+
+.danger-banner.banner-destructive {
+  background-color: var(--color-red-bg);
+  border-color: var(--color-red-border);
+  color: var(--text-primary);
+}
+
+.danger-banner.banner-destructive .danger-banner-icon {
+  color: var(--color-red);
+}
+
+.danger-banner.banner-destructive .danger-banner-title {
+  color: var(--color-red);
+}
+
+.danger-banner.banner-caution {
+  background-color: var(--color-amber-bg);
+  border-color: var(--color-amber-border);
+  color: var(--text-primary);
+}
+
+.danger-banner.banner-caution .danger-banner-icon {
+  color: var(--color-amber);
+}
+
+.danger-banner.banner-caution .danger-banner-title {
+  color: var(--color-amber);
+}
+
+.danger-banner-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.danger-banner-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.danger-banner-title {
+  font-size: var(--font-xs);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.danger-banner-message {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ── Code Block Container Component ────────────────────── */
+.code-block-container {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background-color: var(--bg-surface);
+  overflow: hidden;
+  margin: var(--space-4) 0;
+}
+
+.code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background-color: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.code-block-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: var(--font-xs);
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.code-block-icon {
+  color: var(--text-tertiary);
+}
+
+.copy-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  font-size: var(--font-xs);
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 120ms ease;
+  cursor: pointer;
+}
+
+.copy-button:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+  background-color: var(--bg-hover);
+}
+
+.copy-button .copied-text {
+  color: var(--color-green);
+  font-weight: 600;
+}
+
+.code-block-pre {
+  padding: 14px 16px;
+  margin: 0;
+  background-color: var(--bg-surface);
+  font-family: var(--font-mono);
+  font-size: var(--font-sm);
+  line-height: 1.6;
+  color: var(--text-primary);
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 
