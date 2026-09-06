@@ -741,7 +741,7 @@
 /* Commands Grid */
 .commands-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: var(--space-4);
 }
 
@@ -843,20 +843,134 @@
   border: 1px solid var(--border-subtle);
 }
 
-.command-card-link {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: var(--font-xs);
-  font-weight: 600;
-  color: var(--text-tertiary);
-  text-decoration: none;
-  transition: color 150ms ease;
-}
-
 .command-card:hover .command-card-link {
   color: var(--text-primary);
 }
+
+/* ── Filter Controls Card ──────────────────────────────── */
+.filter-controls-card {
+  padding: var(--space-5);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.search-filter-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.search-input-box {
+  flex: 1;
+  min-width: 260px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0 var(--space-4);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+}
+
+.search-input-box:focus-within {
+  border-color: var(--border-strong);
+  background-color: var(--bg-elevated);
+}
+
+.search-box-icon {
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+.search-control {
+  flex: 1;
+  font-size: var(--font-sm);
+  color: var(--text-primary);
+}
+
+.select-filters-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.select-control {
+  height: 42px;
+  padding: 0 var(--space-4);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-xs);
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.select-control:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.category-pills-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.cat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  font-size: var(--font-xs);
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 120ms ease;
+}
+
+.cat-pill:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+  background-color: var(--bg-hover);
+}
+
+.cat-pill.active {
+  color: #ffffff;
+  background-color: var(--bg-elevated);
+  border-color: var(--border-strong);
+  font-weight: 600;
+}
+
+.cat-pill-count {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+  background-color: var(--bg-tertiary);
+  color: var(--text-tertiary);
+}
+
+.results-status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: var(--space-4) 0 var(--space-4) 0;
+  font-size: var(--font-xs);
+  color: var(--text-tertiary);
+}
+
 
 /* Badges */
 .badge {
@@ -1799,7 +1913,7 @@
 /* ── CheatSheet & Learning Path Styles ─────────────────── */
 .cheatsheet-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: var(--space-6);
 }
 
