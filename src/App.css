@@ -2080,9 +2080,117 @@
   text-decoration: none;
 }
 
-.cmd-chip:hover {
-  border-color: var(--border-strong);
+/* ── Situations & Troubleshooting Component Styles ──────── */
+.situations-stack, .trouble-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.situation-card, .trouble-card {
+  padding: var(--space-6);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.situation-card-header, .trouble-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.sit-badge, .trouble-cat-badge {
+  display: inline-flex;
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background-color: var(--bg-elevated);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+}
+
+.sit-question {
+  font-size: var(--font-lg);
+  font-weight: 700;
   color: var(--text-primary);
 }
+
+.trouble-error-title {
+  font-family: var(--font-mono);
+  font-size: var(--font-base);
+  color: var(--color-red);
+
+}
+
+.sit-commands-block, .trouble-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sit-commands-heading, .trouble-heading {
+  font-size: var(--font-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-tertiary);
+}
+
+.sit-cmd-item {
+  padding: var(--space-4);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.sit-cmd-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sit-cmd-id {
+  font-family: var(--font-mono);
+  font-size: var(--font-xs);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.sit-cmd-why, .trouble-explanation {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.sit-cmd-alts {
+  font-size: var(--font-xs);
+  color: var(--text-tertiary);
+}
+
+.trouble-list {
+  padding-left: 20px;
+  list-style-type: disc;
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fix-commands-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
 
 

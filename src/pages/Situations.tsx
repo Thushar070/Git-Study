@@ -29,7 +29,7 @@ export const Situations: React.FC = () => {
     <div className="page-container situations-page">
       <div className="page-header">
         <div className="page-title-group">
-          <div className="page-icon-wrapper text-amber">
+          <div className="page-icon-wrapper text-primary">
             <HelpCircle size={28} />
           </div>
           <div>
@@ -86,18 +86,18 @@ export const Situations: React.FC = () => {
             </div>
 
             {/* Recommended Commands Stack */}
-            <div className="sit-commands-block mt-4">
-              <h4>Recommended Solution Commands:</h4>
+            <div className="sit-commands-block">
+              <h4 className="sit-commands-heading">Recommended Solution Commands:</h4>
               {sit.recommendedCommands.map((rc, idx) => (
-                <div key={idx} className="sit-cmd-item mb-4">
-                  <div className="sit-cmd-header flex items-center justify-between mb-2">
-                    <span className="font-mono text-emerald text-sm font-semibold">Command: {rc.commandId}</span>
+                <div key={idx} className="sit-cmd-item">
+                  <div className="sit-cmd-header">
+                    <span className="sit-cmd-id">Command: {rc.commandId}</span>
                     <DangerBadge level={rc.dangerLevel} />
                   </div>
-                  <p className="sit-cmd-why mb-2">{rc.explanation}</p>
+                  <p className="sit-cmd-why">{rc.explanation}</p>
                   <CodeBlock code={rc.example} language="bash" showCopy />
                   {rc.alternatives && rc.alternatives.length > 0 && (
-                    <div className="text-xs text-muted mt-1">
+                    <div className="sit-cmd-alts">
                       Alternatives: {rc.alternatives.join(', ')}
                     </div>
                   )}

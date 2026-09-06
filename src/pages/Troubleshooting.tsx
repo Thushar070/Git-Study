@@ -75,28 +75,28 @@ export const Troubleshooting: React.FC = () => {
       {/* Errors Stack */}
       <div className="trouble-stack mt-6">
         {filteredErrors.map((item) => (
-          <div key={item.id} id={item.id} className="trouble-card mb-6 p-6 rounded-lg bg-surface border border-border">
-            <div className="trouble-header mb-4">
-              <span className="trouble-cat-badge badge badge-secondary badge-sm mb-2">{item.category}</span>
-              <h3 className="trouble-error-title font-mono text-danger font-semibold">
+          <div key={item.id} id={item.id} className="trouble-card">
+            <div className="trouble-header">
+              <span className="trouble-cat-badge">{item.category}</span>
+              <h3 className="trouble-error-title">
                 <code>{item.error}</code>
               </h3>
             </div>
 
-            <div className="trouble-section mb-4">
-              <h4 className="font-semibold text-foreground mb-1">What Happened:</h4>
-              <p className="trouble-explanation text-muted">{item.whatHappened}</p>
+            <div className="trouble-section">
+              <h4 className="trouble-heading">What Happened:</h4>
+              <p className="trouble-explanation">{item.whatHappened}</p>
             </div>
 
-            <div className="trouble-section mb-4">
-              <h4 className="font-semibold text-foreground mb-1">Why It Happened:</h4>
-              <p className="trouble-explanation text-muted">{item.whyItHappened}</p>
+            <div className="trouble-section">
+              <h4 className="trouble-heading">Why It Happened:</h4>
+              <p className="trouble-explanation">{item.whyItHappened}</p>
             </div>
 
             {item.howToDiagnose && item.howToDiagnose.length > 0 && (
-              <div className="trouble-section mb-4">
-                <h4 className="font-semibold text-foreground mb-1">How to Diagnose:</h4>
-                <ul className="list-disc pl-5 text-sm text-muted">
+              <div className="trouble-section">
+                <h4 className="trouble-heading">How to Diagnose:</h4>
+                <ul className="trouble-list">
                   {item.howToDiagnose.map((d, i) => (
                     <li key={i}>{d}</li>
                   ))}
@@ -105,9 +105,9 @@ export const Troubleshooting: React.FC = () => {
             )}
 
             {item.howToFix && item.howToFix.length > 0 && (
-              <div className="trouble-section mb-4">
-                <h4 className="font-semibold text-foreground mb-1">Step-by-Step Fix:</h4>
-                <ul className="list-disc pl-5 text-sm text-muted mb-3">
+              <div className="trouble-section">
+                <h4 className="trouble-heading">Step-by-Step Fix:</h4>
+                <ul className="trouble-list">
                   {item.howToFix.map((f, i) => (
                     <li key={i}>{f}</li>
                   ))}
@@ -116,9 +116,9 @@ export const Troubleshooting: React.FC = () => {
             )}
 
             {item.commands && item.commands.length > 0 && (
-              <div className="trouble-section mb-4">
-                <h4 className="font-semibold text-foreground mb-2">Fix Commands:</h4>
-                <div className="fix-commands-list flex flex-col gap-2">
+              <div className="trouble-section">
+                <h4 className="trouble-heading">Fix Commands:</h4>
+                <div className="fix-commands-list">
                   {item.commands.map((cmd, idx) => (
                     <CodeBlock key={idx} code={cmd} language="bash" showCopy />
                   ))}
