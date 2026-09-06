@@ -8,7 +8,11 @@ import {
   Compass,
   ArrowRight,
   AlertTriangle,
-  FileText
+  FileText,
+  GitBranch,
+  Upload,
+  HardDrive,
+  Globe
 } from 'lucide-react';
 import { allCommands as commandRegistry } from '../data/registry';
 import { situationsData } from '../data/situations';
@@ -37,60 +41,56 @@ export const Home: React.FC = () => {
         <div className="hero-content">
           <div className="hero-pill">
             <Zap size={14} className="text-amber" />
-            <span>Interactive Git & GitHub Documentation Reference</span>
+            <span>Developer Reference Platform</span>
           </div>
 
           <h1 className="hero-title">
-            Master Git Commands with <span className="gradient-text">Absolute Clarity</span>
+            GITATLAS
           </h1>
 
           <p className="hero-subtitle">
-            An in-depth interactive documentation reference for Git & GitHub CLI. Explaining syntax, flags, real-world situations, repository state diagrams, and safe undo strategies.
+            Master Git without memorizing Git. A visual, searchable and interactive reference for Git and GitHub CLI commands.
           </p>
 
           <div className="hero-actions">
             <Link to="/git" className="btn btn-primary btn-lg">
               <Terminal size={18} />
-              <span>Explore 60+ Commands</span>
+              <span>Explore Git Commands</span>
             </Link>
             <Link to="/visual-lab" className="btn btn-secondary btn-lg">
               <Layers size={18} />
-              <span>Launch Visual Lab</span>
-            </Link>
-            <Link to="/terminal" className="btn btn-outline btn-lg">
-              <Zap size={18} />
-              <span>Try Simulator</span>
+              <span>Open Visual Lab</span>
             </Link>
           </div>
 
           <div className="hero-stats-grid">
             <div className="stat-card">
               <span className="stat-value">{commandRegistry.length}+</span>
-              <span className="stat-label">Documented Commands</span>
+              <span className="stat-label">Commands</span>
             </div>
             <div className="stat-card">
-              <span className="stat-value">12+</span>
-              <span className="stat-label">Visual Diagrams</span>
+              <span className="stat-value">18</span>
+              <span className="stat-label">Situations</span>
             </div>
             <div className="stat-card">
-              <span className="stat-value">18+</span>
-              <span className="stat-label">Real Scenarios</span>
+              <span className="stat-value">12</span>
+              <span className="stat-label">Visual Labs</span>
             </div>
             <div className="stat-card">
-              <span className="stat-value">100%</span>
-              <span className="stat-label">Free & Open Source</span>
+              <span className="stat-value">9</span>
+              <span className="stat-label">Troubleshooting Guides</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Quick Visual Lifecycle Section */}
+      {/* Hero Visual Workflow Component */}
       <section className="section-block">
         <div className="section-header-center">
-          <span className="section-eyebrow">GIT ARCHITECTURE</span>
-          <h2 className="section-title">The Four Main Git Areas</h2>
+          <span className="section-eyebrow">WORKFLOW VISUALIZATION</span>
+          <h2 className="section-title">How Git Lifecycle Works</h2>
           <p className="section-subtitle">
-            Understand how changes travel between Working Directory, Staging Area, Local Repository, and Remote Repository.
+            Visualizing the flow of files through Git storage areas.
           </p>
         </div>
 
@@ -98,45 +98,45 @@ export const Home: React.FC = () => {
           <div className="lifecycle-grid">
             <div className="lifecycle-stage stage-working">
               <div className="stage-header">
-                <span className="stage-num">01</span>
-                <h3>Working Directory</h3>
+                <FileText size={20} className="text-sky" />
+                <h3>Working Tree</h3>
               </div>
-              <p>Your untracked and modified local files. Changes exist on disk.</p>
-              <div className="stage-cmd">git add &lt;file&gt; →</div>
+              <p>Your local modified & untracked files on disk.</p>
+              <div className="stage-cmd">git add &lt;file&gt; ↓</div>
             </div>
 
             <div className="lifecycle-stage stage-staging">
               <div className="stage-header">
-                <span className="stage-num">02</span>
-                <h3>Staging Area (Index)</h3>
+                <Layers size={20} className="text-amber" />
+                <h3>Index (Staging)</h3>
               </div>
-              <p>Prepared changes ready to be committed into snapshot history.</p>
-              <div className="stage-cmd">git commit -m →</div>
+              <p>Prepared snapshot state ready for commit.</p>
+              <div className="stage-cmd">git commit -m ↓</div>
             </div>
 
             <div className="lifecycle-stage stage-local">
               <div className="stage-header">
-                <span className="stage-num">03</span>
-                <h3>Local Repository</h3>
+                <HardDrive size={20} className="text-purple" />
+                <h3>Local Repo</h3>
               </div>
-              <p>Committed history saved permanently in `.git/` database.</p>
-              <div className="stage-cmd">git push remote →</div>
+              <p>Permanent snapshot database in `.git` directory.</p>
+              <div className="stage-cmd">git push remote ↓</div>
             </div>
 
             <div className="lifecycle-stage stage-remote">
               <div className="stage-header">
-                <span className="stage-num">04</span>
-                <h3>Remote Repository</h3>
+                <Globe size={20} className="text-emerald" />
+                <h3>GitHub (Remote)</h3>
               </div>
-              <p>Shared central repository (GitHub, GitLab, Bitbucket).</p>
-              <div className="stage-cmd">← git fetch / pull</div>
+              <p>Shared remote server repository for team sync.</p>
+              <div className="stage-cmd">↑ git fetch / pull</div>
             </div>
           </div>
 
           <div className="lifecycle-card-footer">
-            <Link to="/visual-lab/lifecycle" className="btn btn-secondary btn-sm">
+            <Link to="/visual-lab" className="btn btn-secondary btn-sm">
               <Layers size={15} />
-              <span>Explore Interactive Lifecycle Visualizer</span>
+              <span>Explore Interactive Visual Lab</span>
               <ArrowRight size={14} />
             </Link>
           </div>
@@ -173,7 +173,7 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Featured Commands */}
+      {/* Popular Commands */}
       <section className="section-block">
         <div className="section-header">
           <div>
@@ -219,59 +219,13 @@ export const Home: React.FC = () => {
             <div className="teaser-actions">
               <Link to="/situations" className="btn btn-primary">
                 <HelpCircle size={16} />
-                <span>Open Situation Finder (18+ Scenarios)</span>
+                <span>Open Situation Finder ({situationsData.length} Scenarios)</span>
               </Link>
               <Link to="/troubleshooting" className="btn btn-secondary">
                 <AlertTriangle size={16} />
                 <span>Troubleshoot Git Error</span>
               </Link>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Interactive Tools Grid */}
-      <section className="section-block">
-        <div className="section-header-center">
-          <span className="section-eyebrow">INTERACTIVE TOOLS</span>
-          <h2 className="section-title">Built for Real-World Git Mastery</h2>
-        </div>
-
-        <div className="tools-features-grid">
-          <div className="feature-tool-card">
-            <div className="feature-icon-box text-purple">
-              <Layers size={24} />
-            </div>
-            <h3>Interactive Visual Lab</h3>
-            <p>Step-by-step interactive SVG animations for branch creation, merging, rebasing, resetting, and cherry-picking.</p>
-            <Link to="/visual-lab" className="feature-link">Open Visual Lab →</Link>
-          </div>
-
-          <div className="feature-tool-card">
-            <div className="feature-icon-box text-amber">
-              <Zap size={24} />
-            </div>
-            <h3>Terminal Simulator</h3>
-            <p>Test commands in a sandbox terminal. Watch your commit history and staging area update dynamically in real time.</p>
-            <Link to="/terminal" className="feature-link">Launch Terminal →</Link>
-          </div>
-
-          <div className="feature-tool-card">
-            <div className="feature-icon-box text-emerald">
-              <Compass size={24} />
-            </div>
-            <h3>Command Comparisons</h3>
-            <p>Side-by-side comparison tables explaining when to use `git rebase` vs `git merge`, `reset` vs `revert`, `fetch` vs `pull`.</p>
-            <Link to="/compare" className="feature-link">Compare Commands →</Link>
-          </div>
-
-          <div className="feature-tool-card">
-            <div className="feature-icon-box text-sky">
-              <FileText size={24} />
-            </div>
-            <h3>Quick Cheat Sheet</h3>
-            <p>A compact, filterable reference sheet organized by practical developer tasks for quick copy-pasting during daily coding.</p>
-            <Link to="/cheatsheet" className="feature-link">View Cheat Sheet →</Link>
           </div>
         </div>
       </section>
