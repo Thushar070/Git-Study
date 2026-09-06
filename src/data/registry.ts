@@ -24,6 +24,7 @@ import { indexToolsCommands } from './commands/index-tools';
 import { verificationCommands } from './commands/verification';
 import { githubCliPrCommands } from './commands/github-cli-pr';
 import { githubCliIssueCommands } from './commands/github-cli-issues';
+import { githubCliRepoCommands } from './commands/github-cli-repo';
 import { situationsData } from './situations';
 import { comparisonsData } from './comparisons';
 import { troubleshootingData } from './troubleshooting';
@@ -53,6 +54,7 @@ export const allCommands: GitCommand[] = [
   ...verificationCommands,
   ...githubCliPrCommands,
   ...githubCliIssueCommands,
+  ...githubCliRepoCommands,
 ];
 
 // Alias for convenience
