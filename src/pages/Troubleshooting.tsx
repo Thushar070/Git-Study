@@ -73,7 +73,7 @@ export const Troubleshooting: React.FC = () => {
       </div>
 
       {/* Errors Stack */}
-      <div className="trouble-stack mt-6">
+      <div className="trouble-stack">
         {filteredErrors.map((item) => (
           <div key={item.id} id={item.id} className="trouble-card">
             <div className="trouble-header">

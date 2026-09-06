@@ -48,7 +48,7 @@ export const CheatSheet: React.FC = () => {
       </div>
 
       {/* Cheat Sheet Matrix Grid */}
-      <div className="cheatsheet-grid mt-6">
+      <div className="cheatsheet-grid">
         {filteredSections.map((section) => (
           <div key={section.title} className="cheatsheet-section-card">
             <h3 className="section-card-title">{section.title}</h3>

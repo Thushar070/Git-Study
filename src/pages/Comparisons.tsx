@@ -24,7 +24,7 @@ export const Comparisons: React.FC = () => {
       </div>
 
       {/* Comparison Selector List */}
-      <div className="category-pills-row mb-6">
+      <div className="category-pills-row">
         {comparisonsData.map((comp) => (
           <button
             key={comp.id}

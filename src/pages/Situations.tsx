@@ -75,7 +75,7 @@ export const Situations: React.FC = () => {
       </div>
 
       {/* Situations List */}
-      <div className="situations-stack mt-6">
+      <div className="situations-stack">
         {filteredSituations.map((sit) => (
           <div key={sit.id} id={sit.id} className="situation-card">
             <div className="situation-card-header">

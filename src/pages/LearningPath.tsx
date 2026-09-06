@@ -53,7 +53,7 @@ export const LearningPath: React.FC = () => {
       </div>
 
       {/* Timeline Stages */}
-      <div className="learning-timeline mt-6">
+      <div className="learning-timeline">
         {learningPathData.map((stage, idx) => {
           const isDone = completedStages.includes(stage.id);
           return (
@@ -64,19 +64,19 @@ export const LearningPath: React.FC = () => {
                   onClick={() => toggleStage(stage.id)}
                   title={isDone ? 'Mark as incomplete' : 'Mark as completed'}
                 >
-                  {isDone ? <CheckCircle2 size={24} className="text-emerald" /> : <Circle size={24} className="text-muted" />}
+                  {isDone ? <CheckCircle2 size={24} className="text-emerald" /> : <Circle size={24} className="text-subtle" />}
                 </button>
                 <span className="stage-number">Step {idx + 1}</span>
               </div>
 
               <div className="stage-content">
-                <div className="stage-header-row mb-2">
+                <div className="stage-header-row">
                   <h3 className="stage-title">{stage.title}</h3>
                 </div>
 
-                <p className="stage-desc text-muted mb-3">{stage.description}</p>
+                <p className="stage-desc">{stage.description}</p>
 
-                <div className="stage-topics-list mb-3">
+                <div className="stage-topics-list">
                   <ul>
                     {stage.topics.map((tp, i) => (
                       <li key={i}>{tp}</li>
