@@ -807,6 +807,18 @@
   overflow: hidden;
 }
 
+.command-card-syntax-preview {
+  padding: 8px 12px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: var(--font-xs);
+  color: var(--color-cyan);
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
 .command-card-meta {
   display: flex;
   align-items: center;

@@ -14,15 +14,17 @@ export const CommandCard: React.FC<CommandCardProps> = ({
   command,
   showCategory = true
 }) => {
+  const previewSyntax = command.syntax[0] || `${command.executable} ${command.name}`;
+
   return (
     <div className="command-card">
       <div className="command-card-header">
         <div className="command-card-title-group">
           <span className="command-card-exec">
-            <Terminal size={14} />
+            <Terminal size={13} />
             {command.executable}
           </span>
-          <Link to={`/git/commands/${command.id}`} className="command-card-name">
+          <Link to={`/${command.executable === 'gh' ? 'github' : 'git'}/commands/${command.id}`} className="command-card-name">
             {command.name}
           </Link>
         </div>
@@ -31,14 +33,18 @@ export const CommandCard: React.FC<CommandCardProps> = ({
 
       <p className="command-card-summary">{command.summary}</p>
 
+      <div className="command-card-syntax-preview">
+        <code>$ {previewSyntax}</code>
+      </div>
+
       <div className="command-card-meta">
         <div className="command-card-badges">
           <DangerBadge level={command.dangerLevel} />
           <DifficultyBadge difficulty={command.difficulty} />
           {showCategory && <span className="command-card-cat">{command.category}</span>}
         </div>
-        <Link to={`/git/commands/${command.id}`} className="command-card-link">
-          <span>Explore</span>
+        <Link to={`/${command.executable === 'gh' ? 'github' : 'git'}/commands/${command.id}`} className="command-card-link">
+          <span>View command</span>
           <ArrowRight size={14} />
         </Link>
       </div>
