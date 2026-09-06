@@ -2,7 +2,7 @@ import React from 'react';
 
 interface BadgeProps {
   children: React.ReactNode;
-  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'purple' | 'amber';
+  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'amber' | 'orange';
   size?: 'sm' | 'md' | 'lg';
   icon?: React.ReactNode;
   className?: string;
@@ -26,14 +26,14 @@ export const Badge: React.FC<BadgeProps> = ({
 export const CategoryBadge: React.FC<{ category: string }> = ({ category }) => {
   const getVariant = (cat: string) => {
     switch (cat.toLowerCase()) {
-      case 'getting started': return 'info';
-      case 'staging & snapshots': return 'primary';
-      case 'branching & switching': return 'purple';
-      case 'merging & rebasing': return 'amber';
+      case 'getting started': return 'secondary';
+      case 'staging & snapshots': return 'orange';
+      case 'branching & switching': return 'amber';
+      case 'merging & rebasing': return 'warning';
       case 'history & inspection': return 'secondary';
       case 'undo & recovery': return 'danger';
       case 'remote repositories': return 'success';
-      case 'github cli': return 'purple';
+      case 'github cli': return 'secondary';
       default: return 'secondary';
     }
   };
@@ -56,7 +56,7 @@ export const DifficultyBadge: React.FC<{ difficulty: 'beginner' | 'intermediate'
   const getVariant = (d: string) => {
     switch (d) {
       case 'beginner': return 'success';
-      case 'intermediate': return 'info';
+      case 'intermediate': return 'secondary';
       case 'advanced': return 'warning';
       case 'expert': return 'danger';
       default: return 'secondary';
