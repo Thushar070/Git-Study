@@ -2192,5 +2192,70 @@
   gap: var(--space-3);
 }
 
+/* ── Comparisons Component Styles ──────────────────────── */
+.comparison-matrix-card {
+  padding: var(--space-6);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.matrix-title {
+  font-size: var(--font-xl);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.matrix-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background-color: var(--bg-surface);
+}
+
+.matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.matrix-table th {
+  padding: 14px 18px;
+  background-color: var(--bg-elevated);
+  font-size: var(--font-sm);
+  font-weight: 700;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border);
+}
+
+.matrix-table th code {
+  font-size: var(--font-base);
+  color: var(--text-primary);
+}
+
+.matrix-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: var(--font-sm);
+}
+
+.matrix-table tr:hover td {
+  background-color: var(--bg-hover);
+}
+
+.criterion-label {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.criterion-value {
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+}
+
+
 
 
