@@ -5,12 +5,9 @@ import {
   Layers,
   HelpCircle,
   Zap,
-  Compass,
   ArrowRight,
   AlertTriangle,
   FileText,
-  GitBranch,
-  Upload,
   HardDrive,
   Globe
 } from 'lucide-react';
