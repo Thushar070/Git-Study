@@ -18,9 +18,15 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
 }) => {
   const [copied, setCopied] = useState(false);
 
+  // Normalize code: strip accidental leading '>' or extra whitespace
+  const rawCode = (code || '').trim().replace(/^>\s*/, '');
+
+  // Strip leading '$ ' for clipboard copy if present
+  const copyText = rawCode.replace(/^\$\s+/, '');
+
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(code);
+      await navigator.clipboard.writeText(copyText);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
@@ -39,18 +45,18 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
           {showCopy && (
             <button
               onClick={handleCopy}
-              className="copy-button"
+              className={`copy-button ${copied ? 'copied' : ''}`}
               title="Copy code"
               aria-label="Copy code to clipboard"
             >
               {copied ? (
                 <>
-                  <Check size={14} className="text-emerald" />
+                  <Check size={13} className="text-emerald" />
                   <span className="copied-text">Copied!</span>
                 </>
               ) : (
                 <>
-                  <Copy size={14} />
+                  <Copy size={13} />
                   <span>Copy</span>
                 </>
               )}
@@ -59,7 +65,12 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
         </div>
       )}
       <pre className="code-block-pre">
-        <code className={`language-${language}`}>{code}</code>
+        <code className={`language-${language}`}>
+          {language === 'bash' && !rawCode.startsWith('$ ') && (
+            <span className="code-prompt">$ </span>
+          )}
+          {rawCode}
+        </code>
       </pre>
     </div>
   );

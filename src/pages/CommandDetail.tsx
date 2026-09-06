@@ -168,22 +168,22 @@ export const CommandDetail: React.FC = () => {
         {/* Tab 1: Overview */}
         {activeTab === 'overview' && (
           <div className="tab-pane">
-            <div className="info-block mb-6">
-              <h3 className="text-lg font-bold mb-2">Why This Command Exists</h3>
-              <p className="prose-text text-muted">{command.whyItExists}</p>
+            <div className="info-card">
+              <h3 className="card-section-title">Why This Command Exists</h3>
+              <p className="prose-text">{command.whyItExists}</p>
             </div>
 
-            <div className="info-block mb-6">
-              <h3 className="text-lg font-bold mb-2">Detailed Explanation</h3>
-              <p className="prose-text text-muted">{command.description}</p>
+            <div className="info-card">
+              <h3 className="card-section-title">Detailed Explanation</h3>
+              <p className="prose-text">{command.description}</p>
             </div>
 
             {command.tips && command.tips.length > 0 && (
-              <div className="info-block tips-block">
-                <h3 className="text-lg font-bold mb-2">Pro Tips & Best Practices</h3>
+              <div className="info-card tips-card">
+                <h3 className="card-section-title">Pro Tips & Best Practices</h3>
                 <ul className="tips-list">
                   {command.tips.map((tip, i) => (
-                    <li key={i}>
+                    <li key={i} className="tip-item">
                       <span className="tip-bullet">💡</span>
                       <span>{tip}</span>
                     </li>
@@ -197,27 +197,27 @@ export const CommandDetail: React.FC = () => {
         {/* Tab 2: Flags & Options Table */}
         {activeTab === 'flags' && (
           <div className="tab-pane">
-            <h3 className="text-lg font-bold mb-2">Command Options & Flags</h3>
-            <p className="table-intro text-muted mb-4">Complete list of flags supported by <code>{command.executable} {command.name}</code>:</p>
+            <h3 className="card-section-title">Command Options & Flags</h3>
+            <p className="table-intro">Complete list of flags supported by <code>{command.executable} {command.name}</code>:</p>
 
-            <div className="options-table-wrapper overflow-x-auto">
-              <table className="options-table w-full border-collapse">
+            <div className="options-table-wrapper">
+              <table className="options-table">
                 <thead>
-                  <tr className="border-b border-border text-left">
-                    <th className="p-3">Flag / Option</th>
-                    <th className="p-3">Description</th>
-                    <th className="p-3">Example Usage</th>
+                  <tr>
+                    <th>Flag / Option</th>
+                    <th>Description</th>
+                    <th>Example Usage</th>
                   </tr>
                 </thead>
                 <tbody>
                   {command.options.map((opt, i) => (
-                    <tr key={i} className="border-b border-border/50">
-                      <td className="flag-cell p-3 font-mono text-emerald">
+                    <tr key={i}>
+                      <td className="flag-cell">
                         <code>{opt.flag}</code>
                       </td>
-                      <td className="desc-cell p-3 text-muted text-sm">{opt.description}</td>
-                      <td className="example-cell p-3 font-mono text-xs">
-                        {opt.example ? <code>{opt.example}</code> : <span className="text-muted">—</span>}
+                      <td className="desc-cell">{opt.description}</td>
+                      <td className="example-cell">
+                        {opt.example ? <code>{opt.example}</code> : <span className="text-subtle">—</span>}
                       </td>
                     </tr>
                   ))}
@@ -230,18 +230,19 @@ export const CommandDetail: React.FC = () => {
         {/* Tab 3: Examples */}
         {activeTab === 'examples' && (
           <div className="tab-pane">
-            <h3 className="text-lg font-bold mb-4">Practical Real-World Examples</h3>
-            <div className="examples-stack flex flex-col gap-6">
+            <h3 className="card-section-title">Practical Real-World Examples</h3>
+            <div className="examples-stack">
               {command.examples.map((ex, i) => (
-                <div key={i} className="example-card bg-surface border border-border p-5 rounded-lg">
-                  <div className="example-card-header mb-2">
-                    <h4 className="font-bold text-foreground">{ex.title}</h4>
+                <div key={i} className="example-card">
+                  <div className="example-card-header">
+                    <h4 className="example-card-title">{ex.title}</h4>
                   </div>
-                  {ex.description && <p className="example-card-desc text-muted text-sm mb-3">{ex.description}</p>}
+                  {ex.description && <p className="example-card-desc">{ex.description}</p>}
                   <CodeBlock code={ex.command} language="bash" showCopy />
                   {ex.output && (
-                    <div className="example-card-explanation text-xs text-muted mt-2 font-mono bg-background p-2 rounded">
-                      <strong>Output:</strong> {ex.output}
+                    <div className="example-card-output">
+                      <span className="output-label">Expected Output:</span>
+                      <pre className="output-text">{ex.output}</pre>
                     </div>
                   )}
                 </div>
@@ -253,15 +254,15 @@ export const CommandDetail: React.FC = () => {
         {/* Tab 4: When to Use / Not Use */}
         {activeTab === 'scenarios' && (
           <div className="tab-pane">
-            <div className="use-cases-grid grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="use-case-card when-to-use bg-surface border border-border p-5 rounded-lg">
-                <div className="use-case-header text-emerald flex items-center gap-2 mb-3">
+            <div className="use-cases-grid">
+              <div className="use-case-card when-to-use">
+                <div className="use-case-header text-emerald">
                   <CheckCircle2 size={20} />
-                  <h3 className="font-bold text-foreground">When to Use This Command</h3>
+                  <h3>When to Use This Command</h3>
                 </div>
-                <ul className="use-case-list flex flex-col gap-2">
+                <ul className="use-case-list">
                   {command.whenToUse.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-muted">
+                    <li key={i}>
                       <span className="list-icon text-emerald">✓</span>
                       <span>{item}</span>
                     </li>
@@ -269,14 +270,14 @@ export const CommandDetail: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="use-case-card when-not-to-use bg-surface border border-border p-5 rounded-lg">
-                <div className="use-case-header text-danger flex items-center gap-2 mb-3">
+              <div className="use-case-card when-not-to-use">
+                <div className="use-case-header text-danger">
                   <XCircle size={20} />
-                  <h3 className="font-bold text-foreground">When NOT to Use This Command</h3>
+                  <h3>When NOT to Use This Command</h3>
                 </div>
-                <ul className="use-case-list flex flex-col gap-2">
+                <ul className="use-case-list">
                   {command.whenNotToUse.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-muted">
+                    <li key={i}>
                       <span className="list-icon text-danger">✕</span>
                       <span>{item}</span>
                     </li>
@@ -287,14 +288,14 @@ export const CommandDetail: React.FC = () => {
 
             {/* Related Situations */}
             {command.situations && command.situations.length > 0 && (
-              <div className="info-block mt-6">
-                <h3 className="text-lg font-bold mb-3">Real-World Developer Scenarios</h3>
-                <div className="situations-inline-list flex flex-col gap-4">
+              <div className="info-card mt-6">
+                <h3 className="card-section-title">Real-World Developer Scenarios</h3>
+                <div className="situations-inline-list">
                   {command.situations.map((sit, i) => (
-                    <div key={i} className="situation-inline-card bg-surface border border-border p-4 rounded-lg">
-                      <p className="sit-desc font-medium text-foreground mb-2">{sit.description}</p>
+                    <div key={i} className="situation-inline-card">
+                      <p className="sit-desc">{sit.description}</p>
                       <CodeBlock code={sit.command} language="bash" showCopy />
-                      {sit.explanation && <p className="text-xs text-muted mt-2">{sit.explanation}</p>}
+                      {sit.explanation && <p className="sit-explanation">{sit.explanation}</p>}
                     </div>
                   ))}
                 </div>
@@ -306,25 +307,24 @@ export const CommandDetail: React.FC = () => {
         {/* Tab 5: Common Mistakes */}
         {activeTab === 'mistakes' && (
           <div className="tab-pane">
-            <div className="mistakes-block bg-surface border border-border p-5 rounded-lg mb-6">
-              <h3 className="text-lg font-bold mb-3 text-foreground">Common Developer Mistakes & Pitfalls</h3>
-              <ul className="mistakes-list flex flex-col gap-3">
+            <div className="mistakes-block">
+              <h3 className="card-section-title">Common Developer Mistakes & Pitfalls</h3>
+              <ul className="mistakes-list">
                 {command.mistakes.map((mistake, i) => (
-                  <li key={i} className="mistake-item flex items-start gap-3 text-sm text-muted">
-                    <AlertTriangle size={18} className="mistake-icon text-amber shrink-0 mt-0.5" />
+                  <li key={i} className="mistake-item">
+                    <AlertTriangle size={18} className="text-amber flex-shrink-0" />
                     <span>{mistake}</span>
                   </li>
                 ))}
               </ul>
             </div>
-
             {command.warnings && command.warnings.length > 0 && (
-              <div className="warnings-block bg-surface border border-border p-5 rounded-lg">
-                <h3 className="text-lg font-bold mb-3 text-foreground">Critical Warnings</h3>
-                <ul className="warnings-list flex flex-col gap-3">
+              <div className="warnings-block">
+                <h3 className="card-section-title">Critical Warnings</h3>
+                <ul className="warnings-list">
                   {command.warnings.map((warn, i) => (
-                    <li key={i} className="warning-item flex items-start gap-3 text-sm text-muted">
-                      <Flame size={18} className="warning-icon text-danger shrink-0 mt-0.5" />
+                    <li key={i} className="warning-item">
+                      <Flame size={18} className="text-danger flex-shrink-0" />
                       <span>{warn}</span>
                     </li>
                   ))}
@@ -337,9 +337,9 @@ export const CommandDetail: React.FC = () => {
 
       {/* Related Commands Footer Bar */}
       {command.relatedCommands && command.relatedCommands.length > 0 && (
-        <section className="related-commands-footer mt-8 border-t border-border pt-6">
-          <h3 className="font-bold text-foreground mb-4">Related Commands</h3>
-          <div className="related-links-grid flex flex-wrap gap-2">
+        <section className="related-commands-footer">
+          <h3 className="card-section-title">Related Commands</h3>
+          <div className="related-links-grid">
             {command.relatedCommands.map((relId) => {
               const relCmd = getCommandById(relId);
               return relCmd ? (
