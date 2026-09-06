@@ -27,7 +27,7 @@ export const LearningPath: React.FC = () => {
     <div className="page-container learning-path-page">
       <div className="page-header">
         <div className="page-title-group">
-          <div className="page-icon-wrapper text-purple">
+          <div className="page-icon-wrapper text-primary">
             <BookOpen size={28} />
           </div>
           <div>
@@ -71,23 +71,23 @@ export const LearningPath: React.FC = () => {
 
               <div className="stage-content">
                 <div className="stage-header-row mb-2">
-                  <h3 className="font-semibold text-lg">{stage.title}</h3>
+                  <h3 className="stage-title">{stage.title}</h3>
                 </div>
 
                 <p className="stage-desc text-muted mb-3">{stage.description}</p>
 
                 <div className="stage-topics-list mb-3">
-                  <ul className="list-disc pl-5 text-sm text-muted">
+                  <ul>
                     {stage.topics.map((tp, i) => (
                       <li key={i}>{tp}</li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="stage-commands-chips flex items-center gap-2 flex-wrap">
-                  <span className="text-xs font-semibold text-foreground">Key Commands:</span>
+                <div className="stage-commands-chips">
+                  <span className="chips-label">Key Commands:</span>
                   {stage.commandIds.map((cmdId) => (
-                    <Link key={cmdId} to={`/git/commands/${cmdId}`} className="cmd-chip inline-flex items-center gap-1 px-2 py-1 bg-surface border border-border rounded text-xs">
+                    <Link key={cmdId} to={`/git/commands/${cmdId}`} className="cmd-chip">
                       <Terminal size={12} />
                       <span>{cmdId}</span>
                     </Link>

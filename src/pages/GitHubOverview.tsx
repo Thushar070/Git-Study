@@ -34,7 +34,7 @@ export const GitHubOverview: React.FC = () => {
     <div className="page-container github-overview-page">
       <div className="page-header">
         <div className="page-title-group">
-          <div className="page-icon-wrapper text-purple">
+          <div className="page-icon-wrapper text-primary">
             <Github size={28} />
           </div>
           <div>

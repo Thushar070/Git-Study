@@ -21,7 +21,7 @@ export const CheatSheet: React.FC = () => {
     <div className="page-container cheatsheet-page">
       <div className="page-header">
         <div className="page-title-group">
-          <div className="page-icon-wrapper text-sky">
+          <div className="page-icon-wrapper text-primary">
             <FileText size={28} />
           </div>
           <div>
@@ -47,16 +47,16 @@ export const CheatSheet: React.FC = () => {
         </div>
       </div>
 
-      {/* Cheat Sheet Grid */}
-      <div className="cheatsheet-grid mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Cheat Sheet Matrix Grid */}
+      <div className="cheatsheet-grid mt-6">
         {filteredSections.map((section) => (
-          <div key={section.title} className="cheatsheet-section-card bg-surface border border-border rounded-lg p-5">
-            <h3 className="section-card-title text-xl font-bold text-foreground mb-4 border-b border-border pb-2">{section.title}</h3>
-            <div className="cheatsheet-items-list flex flex-col gap-4">
+          <div key={section.title} className="cheatsheet-section-card">
+            <h3 className="section-card-title">{section.title}</h3>
+            <div className="cheatsheet-items-list">
               {section.commands.map((item, idx) => (
                 <div key={idx} className="cheatsheet-item">
-                  <div className="cheatsheet-item-info mb-1">
-                    <span className="item-purpose text-sm font-medium text-foreground block">{item.description}</span>
+                  <div className="cheatsheet-item-info">
+                    <span className="item-purpose">{item.description}</span>
                   </div>
                   <CodeBlock code={item.command} language="bash" showCopy />
                 </div>
