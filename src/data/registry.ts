@@ -21,6 +21,7 @@ import { plumbingPackCommands } from './commands/plumbing-pack';
 import { patchingCommands } from './commands/patching';
 import { referenceCommands } from './commands/references';
 import { indexToolsCommands } from './commands/index-tools';
+import { verificationCommands } from './commands/verification';
 import { githubCliPrCommands } from './commands/github-cli-pr';
 import { githubCliIssueCommands } from './commands/github-cli-issues';
 import { situationsData } from './situations';
@@ -49,6 +50,7 @@ export const allCommands: GitCommand[] = [
   ...patchingCommands,
   ...referenceCommands,
   ...indexToolsCommands,
+  ...verificationCommands,
   ...githubCliPrCommands,
   ...githubCliIssueCommands,
 ];
