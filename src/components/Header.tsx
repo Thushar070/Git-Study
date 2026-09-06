@@ -56,8 +56,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch, onToggleSidebar })
         <div className="header-center">
           <button className="search-trigger-btn" onClick={onOpenSearch}>
             <Search size={16} className="search-icon" />
-            <span className="search-placeholder">Search 60+ commands, flags, situations, errors...</span>
-            <kbd className="search-shortcut">/</kbd>
+            <span className="search-placeholder">Search commands, flags, situations...</span>
+            <kbd className="search-shortcut">⌘ K</kbd>
           </button>
         </div>
 
