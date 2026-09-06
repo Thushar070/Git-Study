@@ -18,6 +18,7 @@ import { administrationCommands } from './commands/administration';
 import { plumbingCommands } from './commands/plumbing';
 import { plumbingAdvancedCommands } from './commands/plumbing-advanced';
 import { plumbingPackCommands } from './commands/plumbing-pack';
+import { patchingCommands } from './commands/patching';
 import { githubCliPrCommands } from './commands/github-cli-pr';
 import { githubCliIssueCommands } from './commands/github-cli-issues';
 import { situationsData } from './situations';
@@ -43,6 +44,7 @@ export const allCommands: GitCommand[] = [
   ...plumbingCommands,
   ...plumbingAdvancedCommands,
   ...plumbingPackCommands,
+  ...patchingCommands,
   ...githubCliPrCommands,
   ...githubCliIssueCommands,
 ];
@@ -89,6 +91,7 @@ export const categories: CommandCategory[] = [
   { id: 'remote', name: 'Remote Operations', description: 'Work with remote repositories', icon: '☁️', commands: [] },
   { id: 'stashing-tags', name: 'Stashing & Tags', description: 'Temporarily save work and mark releases', icon: '🏷️', commands: [] },
   { id: 'debugging', name: 'Debugging', description: 'Find bugs and inspect changes', icon: '🔍', commands: [] },
+  { id: 'patching', name: 'Patching & Email', description: 'Patch creation, email workflows, and mailbox application', icon: '✉️', commands: [] },
   { id: 'advanced', name: 'Advanced', description: 'Submodules, subtrees, and advanced operations', icon: '⚙️', commands: [] },
   { id: 'administration', name: 'Administration', description: 'Repository maintenance and housekeeping', icon: '🔧', commands: [] },
   { id: 'plumbing', name: 'Plumbing', description: 'Low-level Git internals and object manipulation', icon: '🔩', commands: [] },
