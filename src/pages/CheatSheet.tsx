@@ -58,7 +58,7 @@ export const CheatSheet: React.FC = () => {
                   <div className="cheatsheet-item-info">
                     <span className="item-purpose">{item.description}</span>
                   </div>
-                  <CodeBlock code={item.command} language="bash" showCopy />
+                  <CodeBlock code={item.command} language="bash" showCopy compact />
                 </div>
               ))}
             </div>

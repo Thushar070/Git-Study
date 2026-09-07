@@ -117,11 +117,7 @@ export const CommandDetail: React.FC = () => {
       {/* Quick Syntax Box */}
       <section className="syntax-quick-card">
         <h3 className="section-subheading">Syntax Quick Reference</h3>
-        <div className="syntax-code-list">
-          {command.syntax.map((syn, idx) => (
-            <CodeBlock key={idx} code={syn} language="bash" showCopy />
-          ))}
-        </div>
+        <CodeBlock code={command.syntax.join('\n')} language="bash" showCopy />
       </section>
 
       {/* Tab Navigation */}

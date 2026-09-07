@@ -118,11 +118,7 @@ export const Troubleshooting: React.FC = () => {
             {item.commands && item.commands.length > 0 && (
               <div className="trouble-section">
                 <h4 className="trouble-heading">Fix Commands:</h4>
-                <div className="fix-commands-list">
-                  {item.commands.map((cmd, idx) => (
-                    <CodeBlock key={idx} code={cmd} language="bash" showCopy />
-                  ))}
-                </div>
+                <CodeBlock code={item.commands.join('\n')} language="bash" showCopy />
               </div>
             )}
           </div>
