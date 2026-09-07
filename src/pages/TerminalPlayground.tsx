@@ -10,6 +10,7 @@ interface TermLog {
 interface RepoState {
   initialized: boolean;
   branch: string;
+  branches: string[];
   untrackedFiles: string[];
   stagedFiles: string[];
   commits: { id: string; message: string; branch: string }[];
@@ -26,6 +27,7 @@ export const TerminalPlayground: React.FC = () => {
   const [state, setState] = useState<RepoState>({
     initialized: true,
     branch: 'main',
+    branches: ['main', 'feature/login'],
     untrackedFiles: ['index.ts', 'App.tsx', 'styles.css'],
     stagedFiles: [],
     commits: [
@@ -47,7 +49,6 @@ export const TerminalPlayground: React.FC = () => {
     const cmd = input.trim();
     const newLogs: TermLog[] = [...logs, { id: Date.now(), type: 'input', text: `$ ${cmd}` }];
 
-    // Evaluate simulated command
     const parts = cmd.split(/\s+/);
     const exec = parts[0];
     const sub = parts[1];
@@ -58,8 +59,35 @@ export const TerminalPlayground: React.FC = () => {
       return;
     }
 
+    if (exec === 'touch') {
+      const fileName = parts[1] || 'newfile.txt';
+      if (!state.untrackedFiles.includes(fileName)) {
+        setState((prev) => ({ ...prev, untrackedFiles: [...prev.untrackedFiles, fileName] }));
+      }
+      newLogs.push({ id: Date.now() + 1, type: 'output', text: `Created file '${fileName}'` });
+      setLogs(newLogs);
+      setInput('');
+      return;
+    }
+
     if (exec === 'git') {
-      if (sub === 'status') {
+      if (!sub || sub === 'help') {
+        newLogs.push({
+          id: Date.now() + 1,
+          type: 'output',
+          text: 'Available test commands:\n- git init\n- git status\n- git add .\n- git commit -m "message"\n- git diff\n- git branch [name]\n- git switch <name>\n- git log\n- git merge <branch>\n- git rebase <branch>\n- git stash / git stash pop\n- git restore <file>\n- git reset [--soft|--hard] HEAD~1\n- git revert <hash>\n- git remote [-v]\n- git fetch / git pull / git push\n- touch <filename>\n- clear'
+        });
+      } else if (sub === 'init') {
+        setState((prev) => ({
+          ...prev,
+          initialized: true,
+          branch: 'main',
+          untrackedFiles: ['index.ts', 'App.tsx', 'styles.css'],
+          stagedFiles: [],
+          commits: [{ id: 'a1b2c3d', message: 'Initial repo commit', branch: 'main' }]
+        }));
+        newLogs.push({ id: Date.now() + 1, type: 'success', text: 'Reinitialized existing Git repository in /home/user/project/.git/' });
+      } else if (sub === 'status') {
         let statusOut = `On branch ${state.branch}\n`;
         if (state.stagedFiles.length === 0 && state.untrackedFiles.length === 0) {
           statusOut += 'nothing to commit, working tree clean';
@@ -74,40 +102,76 @@ export const TerminalPlayground: React.FC = () => {
         newLogs.push({ id: Date.now() + 1, type: 'output', text: statusOut });
       } else if (sub === 'add') {
         const target = parts[2];
-        if (target === '.' || target === '-A') {
+        if (!target) {
+          newLogs.push({ id: Date.now() + 1, type: 'error', text: 'Nothing specified, nothing added.' });
+        } else if (target === '.' || target === '-A' || target === '--all') {
+          const addedCount = state.untrackedFiles.length;
           setState((prev) => ({
             ...prev,
-            stagedFiles: [...prev.stagedFiles, ...prev.untrackedFiles],
+            stagedFiles: Array.from(new Set([...prev.stagedFiles, ...prev.untrackedFiles])),
             untrackedFiles: []
           }));
-          newLogs.push({ id: Date.now() + 1, type: 'success', text: `Staged ${state.untrackedFiles.length} files.` });
+          newLogs.push({ id: Date.now() + 1, type: 'success', text: `Staged ${addedCount} file(s).` });
         } else {
-          newLogs.push({ id: Date.now() + 1, type: 'output', text: `Added ${target || 'files'} to staging index.` });
+          setState((prev) => ({
+            ...prev,
+            stagedFiles: Array.from(new Set([...prev.stagedFiles, target])),
+            untrackedFiles: prev.untrackedFiles.filter((f) => f !== target)
+          }));
+          newLogs.push({ id: Date.now() + 1, type: 'success', text: `Staged '${target}'.` });
         }
       } else if (sub === 'commit') {
         const msgIdx = parts.indexOf('-m');
-        const msg = msgIdx >= 0 ? parts.slice(msgIdx + 1).join(' ').replace(/["']/g, '') : 'Update repo';
+        const msg = msgIdx >= 0 ? parts.slice(msgIdx + 1).join(' ').replace(/["']/g, '') : 'Update project files';
         if (state.stagedFiles.length === 0) {
           newLogs.push({ id: Date.now() + 1, type: 'error', text: 'nothing to commit (use "git add" to track)' });
         } else {
           const hash = Math.random().toString(16).substring(2, 9);
+          const commitCount = state.stagedFiles.length;
           setState((prev) => ({
             ...prev,
             commits: [{ id: hash, message: msg, branch: prev.branch }, ...prev.commits],
             stagedFiles: []
           }));
-          newLogs.push({ id: Date.now() + 1, type: 'success', text: `[${state.branch} ${hash}] ${msg}\n ${state.stagedFiles.length} files changed.` });
+          newLogs.push({ id: Date.now() + 1, type: 'success', text: `[${state.branch} ${hash}] ${msg}\n ${commitCount} file(s) changed.` });
+        }
+      } else if (sub === 'diff') {
+        if (state.untrackedFiles.length === 0 && state.stagedFiles.length === 0) {
+          newLogs.push({ id: Date.now() + 1, type: 'output', text: 'nothing to diff, working tree clean' });
+        } else {
+          const fileToDiff = state.untrackedFiles[0] || state.stagedFiles[0] || 'App.tsx';
+          newLogs.push({
+            id: Date.now() + 1,
+            type: 'output',
+            text: `diff --git a/${fileToDiff} b/${fileToDiff}\n--- a/${fileToDiff}\n+++ b/${fileToDiff}\n@@ -1,4 +1,6 @@\n+ import { GitAtlas } from './components';\n+ // Added new feature implementation`
+          });
         }
       } else if (sub === 'branch') {
         const bName = parts[2];
         if (!bName) {
-          newLogs.push({ id: Date.now() + 1, type: 'output', text: `* ${state.branch}\n  feature/auth\n  fix/bug-404` });
+          const branchList = state.branches.map((b) => (b === state.branch ? `* ${b}` : `  ${b}`)).join('\n');
+          newLogs.push({ id: Date.now() + 1, type: 'output', text: branchList });
+        } else if (bName === '-d' || bName === '-D') {
+          const delTarget = parts[3];
+          if (delTarget && state.branches.includes(delTarget)) {
+            setState((prev) => ({ ...prev, branches: prev.branches.filter((b) => b !== delTarget) }));
+            newLogs.push({ id: Date.now() + 1, type: 'success', text: `Deleted branch ${delTarget}.` });
+          } else {
+            newLogs.push({ id: Date.now() + 1, type: 'error', text: `error: branch '${delTarget}' not found.` });
+          }
         } else {
+          if (!state.branches.includes(bName)) {
+            setState((prev) => ({ ...prev, branches: [...prev.branches, bName] }));
+          }
           newLogs.push({ id: Date.now() + 1, type: 'success', text: `Created branch '${bName}'` });
         }
       } else if (sub === 'checkout' || sub === 'switch') {
-        const bName = parts[2] === '-c' ? parts[3] : parts[2];
+        const isCreate = parts[2] === '-c' || parts[2] === '-b';
+        const bName = isCreate ? parts[3] : parts[2];
         if (bName) {
+          if (!state.branches.includes(bName)) {
+            setState((prev) => ({ ...prev, branches: [...prev.branches, bName] }));
+          }
           setState((prev) => ({ ...prev, branch: bName }));
           newLogs.push({ id: Date.now() + 1, type: 'success', text: `Switched to branch '${bName}'` });
         } else {
@@ -116,15 +180,71 @@ export const TerminalPlayground: React.FC = () => {
       } else if (sub === 'log') {
         const logStr = state.commits.map((c) => `commit ${c.id} (HEAD -> ${c.branch})\nAuthor: Developer <dev@gitatlas.io>\n    ${c.message}`).join('\n\n');
         newLogs.push({ id: Date.now() + 1, type: 'output', text: logStr });
+      } else if (sub === 'merge') {
+        const targetBranch = parts[2] || 'feature/login';
+        newLogs.push({ id: Date.now() + 1, type: 'success', text: `Updating ${state.commits[0]?.id || 'a1b2c3d'}..9f8e7d6\nFast-forward\n Merged '${targetBranch}' into ${state.branch}.` });
+      } else if (sub === 'rebase') {
+        const targetBranch = parts[2] || 'main';
+        newLogs.push({ id: Date.now() + 1, type: 'success', text: `Successfully rebased and updated refs/heads/${state.branch} onto ${targetBranch}.` });
       } else if (sub === 'stash') {
-        setState((prev) => ({ ...prev, stashedCount: prev.stashedCount + 1, untrackedFiles: [], stagedFiles: [] }));
-        newLogs.push({ id: Date.now() + 1, type: 'success', text: 'Saved working directory and index state WIP on main.' });
-      } else if (sub === 'help') {
+        const action = parts[2];
+        if (action === 'pop') {
+          if (state.stashedCount > 0) {
+            setState((prev) => ({ ...prev, stashedCount: prev.stashedCount - 1, untrackedFiles: ['styles.css'] }));
+            newLogs.push({ id: Date.now() + 1, type: 'success', text: 'On branch main: Restored stashed changes.' });
+          } else {
+            newLogs.push({ id: Date.now() + 1, type: 'error', text: 'No stash entries found.' });
+          }
+        } else {
+          setState((prev) => ({ ...prev, stashedCount: prev.stashedCount + 1, untrackedFiles: [], stagedFiles: [] }));
+          newLogs.push({ id: Date.now() + 1, type: 'success', text: 'Saved working directory and index state WIP on main.' });
+        }
+      } else if (sub === 'restore') {
+        const isStaged = parts[2] === '--staged';
+        const file = isStaged ? parts[3] : parts[2];
+        if (isStaged && file) {
+          setState((prev) => ({
+            ...prev,
+            stagedFiles: prev.stagedFiles.filter((f) => f !== file),
+            untrackedFiles: [...prev.untrackedFiles, file]
+          }));
+          newLogs.push({ id: Date.now() + 1, type: 'success', text: `Unstaged '${file}'.` });
+        } else if (file) {
+          newLogs.push({ id: Date.now() + 1, type: 'success', text: `Restored working directory copy of '${file}'.` });
+        } else {
+          newLogs.push({ id: Date.now() + 1, type: 'error', text: 'fatal: pathspec required for restore' });
+        }
+      } else if (sub === 'reset') {
+        const mode = parts.includes('--hard') ? 'hard' : parts.includes('--soft') ? 'soft' : 'mixed';
+        if (mode === 'hard') {
+          setState((prev) => ({ ...prev, stagedFiles: [], untrackedFiles: [] }));
+          newLogs.push({ id: Date.now() + 1, type: 'success', text: 'HEAD is now at a1b2c3d (Hard reset: working tree clean)' });
+        } else if (mode === 'soft') {
+          newLogs.push({ id: Date.now() + 1, type: 'success', text: 'HEAD is now at a1b2c3d (Soft reset: changes remain staged)' });
+        } else {
+          setState((prev) => ({ ...prev, untrackedFiles: [...prev.untrackedFiles, ...prev.stagedFiles], stagedFiles: [] }));
+          newLogs.push({ id: Date.now() + 1, type: 'success', text: 'Unstaged changes after reset.' });
+        }
+      } else if (sub === 'revert') {
+        const targetHash = parts[2] || state.commits[0]?.id || 'HEAD';
+        const revertHash = Math.random().toString(16).substring(2, 9);
+        setState((prev) => ({
+          ...prev,
+          commits: [{ id: revertHash, message: `Revert commit ${targetHash}`, branch: prev.branch }, ...prev.commits]
+        }));
+        newLogs.push({ id: Date.now() + 1, type: 'success', text: `[${state.branch} ${revertHash}] Revert commit ${targetHash}` });
+      } else if (sub === 'remote') {
         newLogs.push({
           id: Date.now() + 1,
           type: 'output',
-          text: 'Available test commands:\n- git status\n- git add .\n- git commit -m "message"\n- git branch <name>\n- git switch <name>\n- git log\n- git stash\n- clear'
+          text: 'origin\thttps://github.com/user/gitatlas-app.git (fetch)\norigin\thttps://github.com/user/gitatlas-app.git (push)'
         });
+      } else if (sub === 'fetch') {
+        newLogs.push({ id: Date.now() + 1, type: 'success', text: 'From https://github.com/user/gitatlas-app\n * [new branch]      main       -> origin/main' });
+      } else if (sub === 'pull') {
+        newLogs.push({ id: Date.now() + 1, type: 'success', text: 'Already up to date.' });
+      } else if (sub === 'push') {
+        newLogs.push({ id: Date.now() + 1, type: 'success', text: 'Everything up-to-date\nTo https://github.com/user/gitatlas-app.git\n * [up to date]      main -> main' });
       } else {
         newLogs.push({ id: Date.now() + 1, type: 'error', text: `git: '${sub}' is not a recognized simulator command. Type 'git help'.` });
       }
@@ -140,6 +260,7 @@ export const TerminalPlayground: React.FC = () => {
     setState({
       initialized: true,
       branch: 'main',
+      branches: ['main', 'feature/login'],
       untrackedFiles: ['index.ts', 'App.tsx', 'styles.css'],
       stagedFiles: [],
       commits: [{ id: 'a1b2c3d', message: 'Initial repo commit', branch: 'main' }],
@@ -196,7 +317,7 @@ export const TerminalPlayground: React.FC = () => {
               className="term-input"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Type git command (e.g. git add .)..."
+              placeholder="Type git command (e.g. git status, git add .)..."
               autoFocus
             />
           </form>

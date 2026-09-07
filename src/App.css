@@ -1907,15 +1907,27 @@
     --sidebar-width: 0px;
   }
 
-  .app-sidebar {
-    transform: translateX(-100%);
-    transition: transform 250ms ease;
+  .sidebar-wrapper {
+    width: 0 !important;
+    min-width: 0 !important;
+  }
+
+  .sidebar-wrapper .app-sidebar {
+    display: none;
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    bottom: 0;
+    height: calc(100vh - var(--header-height));
     width: 280px;
     z-index: 400;
+    background-color: var(--bg-sidebar);
+    border-right: 1px solid var(--border);
   }
 
   .sidebar-wrapper.mobile-open .app-sidebar {
-    transform: translateX(0);
+    display: flex;
+    flex-direction: column;
   }
 
   .sidebar-backdrop {
