@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { HelpCircle, Search } from 'lucide-react';
 import { situationsData } from '../data/situations';
 import { CodeBlock } from '../components/CodeBlock';
+import { ProseBlock } from '../components/DocContent';
 import { DangerBadge } from '../components/Badge';
 
 export const Situations: React.FC = () => {
@@ -94,7 +95,7 @@ export const Situations: React.FC = () => {
                     <span className="sit-cmd-id">Command: {rc.commandId}</span>
                     <DangerBadge level={rc.dangerLevel} />
                   </div>
-                  <p className="sit-cmd-why">{rc.explanation}</p>
+                  <ProseBlock text={rc.explanation} />
                   <CodeBlock code={rc.example} language="bash" showCopy />
                   {rc.alternatives && rc.alternatives.length > 0 && (
                     <div className="sit-cmd-alts">

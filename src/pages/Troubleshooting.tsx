@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AlertTriangle, Search } from 'lucide-react';
 import { troubleshootingData } from '../data/troubleshooting';
 import { CodeBlock } from '../components/CodeBlock';
+import { ProseBlock } from '../components/DocContent';
 
 export const Troubleshooting: React.FC = () => {
   const [search, setSearch] = useState('');
@@ -85,33 +86,33 @@ export const Troubleshooting: React.FC = () => {
 
             <div className="trouble-section">
               <h4 className="trouble-heading">What Happened:</h4>
-              <p className="trouble-explanation">{item.whatHappened}</p>
+              <ProseBlock text={item.whatHappened} />
             </div>
 
             <div className="trouble-section">
               <h4 className="trouble-heading">Why It Happened:</h4>
-              <p className="trouble-explanation">{item.whyItHappened}</p>
+              <ProseBlock text={item.whyItHappened} />
             </div>
 
             {item.howToDiagnose && item.howToDiagnose.length > 0 && (
               <div className="trouble-section">
                 <h4 className="trouble-heading">How to Diagnose:</h4>
-                <ul className="trouble-list">
+                <ol className="trouble-steps-list">
                   {item.howToDiagnose.map((d, i) => (
-                    <li key={i}>{d}</li>
+                    <li key={i}><ProseBlock text={d} /></li>
                   ))}
-                </ul>
+                </ol>
               </div>
             )}
 
             {item.howToFix && item.howToFix.length > 0 && (
               <div className="trouble-section">
                 <h4 className="trouble-heading">Step-by-Step Fix:</h4>
-                <ul className="trouble-list">
+                <ol className="trouble-steps-list">
                   {item.howToFix.map((f, i) => (
-                    <li key={i}>{f}</li>
+                    <li key={i}><ProseBlock text={f} /></li>
                   ))}
-                </ul>
+                </ol>
               </div>
             )}
 

@@ -1861,25 +1861,17 @@
 }
 
 .footer-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: var(--space-6);
-  border-top: 1px solid var(--border-subtle);
-  font-size: var(--font-xs);
-  color: var(--text-muted);
-}
-
-.footer-bottom {
   max-width: var(--max-content-width);
   margin: var(--space-8) auto 0 auto;
-  padding-top: var(--space-6);
+  padding: var(--space-6) var(--space-6) 0;
   border-top: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-size: var(--font-xs);
   color: var(--text-muted);
+  gap: var(--space-4);
+  flex-wrap: wrap;
 }
 
 /* ── Responsive Layout ──────────────────────────────────── */
@@ -2272,6 +2264,26 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+}
+
+.trouble-steps-list {
+  padding-left: 20px;
+  list-style-type: decimal;
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  counter-reset: step;
+}
+
+.trouble-steps-list li {
+  line-height: 1.6;
+}
+
+.trouble-steps-list li .prose-text {
+  margin: 0;
+  display: inline;
 }
 
 .fix-commands-list {
