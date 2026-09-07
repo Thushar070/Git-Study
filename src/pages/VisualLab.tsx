@@ -190,7 +190,7 @@ export const VisualLab: React.FC = () => {
             </div>
 
             <div className="lab-info-footer">
-              <CodeBlock code="git switch -c feature/login\ngit commit -m 'Add OAuth support'" language="bash" showCopy />
+              <CodeBlock code={`git switch -c feature/login\ngit commit -m 'Add OAuth support'`} language="bash" showCopy />
             </div>
           </div>
         )}
@@ -224,7 +224,7 @@ export const VisualLab: React.FC = () => {
               </svg>
             </div>
 
-            <CodeBlock code="git checkout main\ngit merge feature/login" language="bash" showCopy />
+            <CodeBlock code={`git checkout main\ngit merge feature/login`} language="bash" showCopy />
           </div>
         )}
 
@@ -248,7 +248,7 @@ export const VisualLab: React.FC = () => {
               </div>
             </div>
 
-            <CodeBlock code="git checkout feature/login\ngit rebase main" language="bash" showCopy />
+            <CodeBlock code={`git checkout feature/login\ngit rebase main`} language="bash" showCopy />
           </div>
         )}
 
@@ -315,7 +315,7 @@ export const VisualLab: React.FC = () => {
               <p>Apply changes introduced by existing commits without merging full branches.</p>
             </div>
 
-            <CodeBlock code="git checkout main\ngit cherry-pick e4f82a9" language="bash" showCopy />
+            <CodeBlock code={`git checkout main\ngit cherry-pick e4f82a9`} language="bash" showCopy />
           </div>
         )}
       </div>

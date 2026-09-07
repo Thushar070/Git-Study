@@ -34,7 +34,7 @@ export const CommandCard: React.FC<CommandCardProps> = ({
       <p className="command-card-summary">{command.summary}</p>
 
       <div className="command-card-syntax-preview">
-        <code>$ {previewSyntax}</code>
+        <code>{previewSyntax}</code>
       </div>
 
       <div className="command-card-meta">
