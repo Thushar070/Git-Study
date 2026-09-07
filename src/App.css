@@ -2670,6 +2670,7 @@
   background-color: var(--bg-surface);
   overflow: hidden;
   margin: var(--space-4) 0;
+  max-width: 100%;
 }
 
 .code-block-header {
@@ -2679,6 +2680,7 @@
   padding: 8px 14px;
   background-color: var(--bg-elevated);
   border-bottom: 1px solid var(--border-subtle);
+  min-height: 36px;
 }
 
 .code-block-title {
@@ -2695,6 +2697,7 @@
 
 .code-block-icon {
   color: var(--text-tertiary);
+  flex-shrink: 0;
 }
 
 .copy-button {
@@ -2704,7 +2707,7 @@
   gap: 5px;
   min-width: 72px;
   height: 26px;
-  padding: 0 8px;
+  padding: 0 10px;
   border-radius: var(--radius-sm);
   background-color: var(--bg-surface);
   border: 1px solid var(--border-subtle);
@@ -2713,12 +2716,18 @@
   color: var(--text-secondary);
   transition: all 120ms ease;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .copy-button:hover {
   border-color: var(--border-strong);
   color: var(--text-primary);
   background-color: var(--bg-hover);
+}
+
+.copy-button:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 1px;
 }
 
 .copy-button.copied {
@@ -2731,10 +2740,8 @@
   font-weight: 600;
 }
 
-.code-prompt {
-  color: var(--text-tertiary);
-  user-select: none;
-  font-weight: 500;
+.copy-icon-check {
+  color: var(--color-green);
 }
 
 .code-block-pre {
@@ -2743,11 +2750,26 @@
   background-color: var(--bg-surface);
   font-family: var(--font-mono);
   font-size: var(--font-sm);
-  line-height: 1.6;
+  line-height: 1.7;
   color: var(--text-primary);
   overflow-x: auto;
-  white-space: pre-wrap;
-  word-break: break-word;
+  white-space: pre;
+}
+
+/* Compact variant for cheatsheet / dense layouts */
+.code-block-compact {
+  margin: var(--space-2) 0;
+}
+
+.code-block-compact .code-block-header {
+  padding: 5px 12px;
+  min-height: 30px;
+}
+
+.code-block-compact .code-block-pre {
+  padding: 10px 14px;
+  font-size: var(--font-xs);
+  line-height: 1.5;
 }
 
 /* ── Command Detail Component Styles ───────────────────── */

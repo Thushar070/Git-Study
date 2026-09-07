@@ -6,6 +6,7 @@ interface CodeBlockProps {
   language?: string;
   title?: string;
   showCopy?: boolean;
+  compact?: boolean;
   className?: string;
 }
 
@@ -14,15 +15,19 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
   language = 'bash',
   title,
   showCopy = true,
+  compact = false,
   className = ''
 }) => {
   const [copied, setCopied] = useState(false);
 
-  // Normalize code: strip accidental leading '>' or extra whitespace
-  const rawCode = (code || '').trim().replace(/^>\s*/, '');
+  // Normalize: trim whitespace
+  const rawCode = (code || '').trim();
 
-  // Strip leading '$ ' for clipboard copy if present
-  const copyText = rawCode.replace(/^\$\s+/, '');
+  // For clipboard: strip leading '$ ' from each line if present
+  const copyText = rawCode
+    .split('\n')
+    .map((line) => line.replace(/^\$\s+/, ''))
+    .join('\n');
 
   const handleCopy = async () => {
     try {
@@ -34,43 +39,43 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
     }
   };
 
+  const containerClasses = [
+    'code-block-container',
+    compact ? 'code-block-compact' : '',
+    className
+  ].filter(Boolean).join(' ');
+
   return (
-    <div className={`code-block-container ${className}`}>
-      {(title || showCopy) && (
-        <div className="code-block-header">
-          <div className="code-block-title">
-            <Terminal size={14} className="code-block-icon" />
-            <span>{title || language}</span>
-          </div>
-          {showCopy && (
-            <button
-              onClick={handleCopy}
-              className={`copy-button ${copied ? 'copied' : ''}`}
-              title="Copy code"
-              aria-label="Copy code to clipboard"
-            >
-              {copied ? (
-                <>
-                  <Check size={13} className="text-emerald" />
-                  <span className="copied-text">Copied!</span>
-                </>
-              ) : (
-                <>
-                  <Copy size={13} />
-                  <span>Copy</span>
-                </>
-              )}
-            </button>
-          )}
+    <div className={containerClasses}>
+      <div className="code-block-header">
+        <div className="code-block-title">
+          <Terminal size={compact ? 12 : 14} className="code-block-icon" />
+          <span>{title || language}</span>
         </div>
-      )}
+        {showCopy && (
+          <button
+            onClick={handleCopy}
+            className={`copy-button ${copied ? 'copied' : ''}`}
+            title={copied ? 'Copied to clipboard' : 'Copy code'}
+            aria-label={copied ? 'Copied to clipboard' : 'Copy code to clipboard'}
+            tabIndex={0}
+          >
+            {copied ? (
+              <>
+                <Check size={13} className="copy-icon-check" />
+                <span className="copied-text">Copied!</span>
+              </>
+            ) : (
+              <>
+                <Copy size={13} />
+                <span>Copy</span>
+              </>
+            )}
+          </button>
+        )}
+      </div>
       <pre className="code-block-pre">
-        <code className={`language-${language}`}>
-          {language === 'bash' && !rawCode.startsWith('$ ') && (
-            <span className="code-prompt">$ </span>
-          )}
-          {rawCode}
-        </code>
+        <code className={`language-${language}`}>{rawCode}</code>
       </pre>
     </div>
   );
