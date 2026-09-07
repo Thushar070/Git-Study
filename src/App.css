@@ -2606,9 +2606,22 @@
     text-align: center;
   }
 
-  pre, code, .syntax-block, .example-code, .terminal-window {
+  pre, code, .syntax-block, .example-code, .terminal-window, .code-block-container, .code-block-pre {
     max-width: 100%;
     overflow-x: auto;
+  }
+
+  .code-block-pre {
+    padding: 12px 14px;
+    font-size: var(--font-xs);
+  }
+
+  .copy-button.floating-copy {
+    top: 8px;
+    right: 8px;
+    height: 24px;
+    padding: 0 8px;
+    font-size: 11px;
   }
 
   /* ── Danger & Caution Callout Banners ──────────────────── */
