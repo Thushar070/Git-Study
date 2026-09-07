@@ -2714,7 +2714,9 @@
   font-size: 13px;
   line-height: 1.6;
   color: var(--text-primary, #e6edf3);
-  white-space: pre;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .code-box-compact .code-box-pre {
