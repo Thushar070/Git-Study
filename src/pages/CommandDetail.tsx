@@ -244,10 +244,13 @@ export const CommandDetail: React.FC = () => {
                   {ex.description && <p className="example-card-desc">{ex.description}</p>}
                   <CodeBlock code={ex.command} language="bash" showCopy />
                   {ex.output && (
-                    <div className="output-block">
-                      <span className="output-block-label">Expected Output</span>
-                      <pre className="output-block-pre">{ex.output}</pre>
-                    </div>
+                    <CodeBlock
+                      code={ex.output}
+                      language="text"
+                      title="Expected Output"
+                      showPrompt={false}
+                      showCopy={false}
+                    />
                   )}
                 </div>
               ))}
