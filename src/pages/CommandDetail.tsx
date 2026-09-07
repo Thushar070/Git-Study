@@ -7,7 +7,6 @@ import {
   CheckCircle2,
   XCircle,
   AlertTriangle,
-  Flame,
   ExternalLink,
   HelpCircle
 } from 'lucide-react';
@@ -15,6 +14,7 @@ import { getCommandById } from '../data/registry';
 import { CategoryBadge, DangerBadge, DifficultyBadge } from '../components/Badge';
 import { DangerBanner } from '../components/DangerBanner';
 import { CodeBlock } from '../components/CodeBlock';
+import { ProseBlock, TipCallout, WarningCallout, DangerCallout } from '../components/DocContent';
 import { FavoriteButton } from '../components/FavoriteButton';
 import { addRecentlyViewed } from '../lib/storage';
 
@@ -166,25 +166,33 @@ export const CommandDetail: React.FC = () => {
           <div className="tab-pane">
             <div className="info-card">
               <h3 className="card-section-title">Why This Command Exists</h3>
-              <p className="prose-text">{command.whyItExists}</p>
+              <ProseBlock text={command.whyItExists} />
             </div>
 
             <div className="info-card">
               <h3 className="card-section-title">Detailed Explanation</h3>
-              <p className="prose-text">{command.description}</p>
+              <ProseBlock text={command.description} />
             </div>
 
-            {command.tips && command.tips.length > 0 && (
-              <div className="info-card tips-card">
-                <h3 className="card-section-title">Pro Tips & Best Practices</h3>
-                <ul className="tips-list">
-                  {command.tips.map((tip, i) => (
-                    <li key={i} className="tip-item">
-                      <span className="tip-bullet">💡</span>
-                      <span>{tip}</span>
-                    </li>
+            {command.notes && command.notes.length > 0 && (
+              <div className="info-card">
+                <h3 className="card-section-title">Important Notes</h3>
+                <ul className="doc-list">
+                  {command.notes.map((note, i) => (
+                    <li key={i}><ProseBlock text={note} /></li>
                   ))}
                 </ul>
+              </div>
+            )}
+
+            {command.tips && command.tips.length > 0 && (
+              <div className="tips-stack">
+                <h3 className="card-section-title">Pro Tips & Best Practices</h3>
+                {command.tips.map((tip, i) => (
+                  <TipCallout key={i}>
+                    <ProseBlock text={tip} />
+                  </TipCallout>
+                ))}
               </div>
             )}
           </div>
@@ -236,9 +244,9 @@ export const CommandDetail: React.FC = () => {
                   {ex.description && <p className="example-card-desc">{ex.description}</p>}
                   <CodeBlock code={ex.command} language="bash" showCopy />
                   {ex.output && (
-                    <div className="example-card-output">
-                      <span className="output-label">Expected Output:</span>
-                      <pre className="output-text">{ex.output}</pre>
+                    <div className="output-block">
+                      <span className="output-block-label">Expected Output</span>
+                      <pre className="output-block-pre">{ex.output}</pre>
                     </div>
                   )}
                 </div>
@@ -303,29 +311,25 @@ export const CommandDetail: React.FC = () => {
         {/* Tab 5: Common Mistakes */}
         {activeTab === 'mistakes' && (
           <div className="tab-pane">
-            <div className="mistakes-block">
-              <h3 className="card-section-title">Common Developer Mistakes & Pitfalls</h3>
-              <ul className="mistakes-list">
-                {command.mistakes.map((mistake, i) => (
-                  <li key={i} className="mistake-item">
-                    <AlertTriangle size={18} className="text-amber flex-shrink-0" />
-                    <span>{mistake}</span>
-                  </li>
-                ))}
-              </ul>
+            <h3 className="card-section-title">Common Developer Mistakes & Pitfalls</h3>
+            <div className="mistakes-stack">
+              {command.mistakes.map((mistake, i) => (
+                <WarningCallout key={i}>
+                  <ProseBlock text={mistake} />
+                </WarningCallout>
+              ))}
             </div>
             {command.warnings && command.warnings.length > 0 && (
-              <div className="warnings-block">
-                <h3 className="card-section-title">Critical Warnings</h3>
-                <ul className="warnings-list">
+              <>
+                <h3 className="card-section-title" style={{ marginTop: 'var(--space-6)' }}>Critical Warnings</h3>
+                <div className="warnings-stack">
                   {command.warnings.map((warn, i) => (
-                    <li key={i} className="warning-item">
-                      <Flame size={18} className="text-danger flex-shrink-0" />
-                      <span>{warn}</span>
-                    </li>
+                    <DangerCallout key={i}>
+                      <ProseBlock text={warn} />
+                    </DangerCallout>
                   ))}
-                </ul>
-              </div>
+                </div>
+              </>
             )}
           </div>
         )}

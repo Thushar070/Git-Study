@@ -2923,6 +2923,49 @@
   line-height: 1.65;
 }
 
+.prose-text .inline-code {
+  font-size: 0.85em;
+}
+
+.tips-stack,
+.mistakes-stack,
+.warnings-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.tips-stack .callout .prose-text,
+.mistakes-stack .callout .prose-text,
+.warnings-stack .callout .prose-text {
+  margin: 0;
+}
+
+.doc-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.doc-list li {
+  padding-left: var(--space-4);
+  position: relative;
+}
+
+.doc-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--text-tertiary);
+  font-weight: 700;
+}
+
+.doc-list .prose-text {
+  margin: 0;
+}
+
 .tips-card {
   background-color: var(--bg-surface);
   border-color: var(--border);
