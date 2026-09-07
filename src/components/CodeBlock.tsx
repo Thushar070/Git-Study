@@ -22,12 +22,13 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
 }) => {
   const [copied, setCopied] = useState(false);
 
-  // Determine if shell prompt ($ ) should be rendered
+  // Determine if prompt ($ ) should be shown
   const isShell = language === 'bash' || language === 'sh' || language === 'zsh' || language === 'terminal';
   const shouldShowPrompt = showPrompt !== undefined ? showPrompt : isShell;
 
   // Split lines and normalize: strip existing leading '$ ' or '$' from raw input
-  const lines = (code || '')
+  const rawCode = code || '';
+  const lines = rawCode
     .trim()
     .split('\n')
     .map((line) => line.replace(/^\$\s*/, ''));
@@ -45,84 +46,59 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
     }
   };
 
-  const containerClasses = [
-    'code-block-container',
-    compact ? 'code-block-compact' : '',
-    title ? 'has-header' : 'no-header',
-    className
-  ].filter(Boolean).join(' ');
-
   return (
-    <div className={containerClasses}>
-      {/* Header bar (only rendered if title is explicitly provided) */}
+    <div className={`code-box ${compact ? 'code-box-compact' : ''} ${className}`}>
+      {/* Optional Title Bar */}
       {title && (
-        <div className="code-block-header">
-          <div className="code-block-title">
-            <Terminal size={13} className="code-block-icon" aria-hidden="true" />
+        <div className="code-box-header">
+          <div className="code-box-title">
+            <Terminal size={12} aria-hidden="true" />
             <span>{title}</span>
           </div>
-          {showCopy && (
-            <button
-              type="button"
-              onClick={handleCopy}
-              className={`copy-button ${copied ? 'copied' : ''}`}
-              title={copied ? 'Copied to clipboard' : 'Copy code'}
-              aria-label={copied ? 'Copied code to clipboard' : 'Copy code to clipboard'}
-            >
-              {copied ? (
-                <>
-                  <Check size={13} aria-hidden="true" />
-                  <span>Copied!</span>
-                </>
-              ) : (
-                <>
-                  <Copy size={13} aria-hidden="true" />
-                  <span>Copy</span>
-                </>
-              )}
-            </button>
-          )}
         </div>
       )}
 
-      {/* Code Body Area */}
-      <div className="code-block-body">
-        {!title && showCopy && (
+      {/* Main Code Row (Flex Container) */}
+      <div className="code-box-row">
+        <div className="code-box-code">
+          <pre className="code-box-pre">
+            <code>
+              {lines.map((line, idx) => (
+                <span key={idx} className="code-box-line">
+                  {shouldShowPrompt && (
+                    <span className="code-prompt" aria-hidden="true">
+                      $&nbsp;
+                    </span>
+                  )}
+                  <span className="code-text">{line}</span>
+                  {idx < lines.length - 1 ? '\n' : ''}
+                </span>
+              ))}
+            </code>
+          </pre>
+        </div>
+
+        {showCopy && (
           <button
             type="button"
             onClick={handleCopy}
-            className={`copy-button floating-copy ${copied ? 'copied' : ''}`}
+            className={`code-box-copy-btn ${copied ? 'copied' : ''}`}
             title={copied ? 'Copied to clipboard' : 'Copy code'}
             aria-label={copied ? 'Copied code to clipboard' : 'Copy code to clipboard'}
           >
             {copied ? (
               <>
-                <Check size={13} aria-hidden="true" />
-                <span>Copied!</span>
+                <Check size={12} aria-hidden="true" />
+                <span>Copied</span>
               </>
             ) : (
               <>
-                <Copy size={13} aria-hidden="true" />
+                <Copy size={12} aria-hidden="true" />
                 <span>Copy</span>
               </>
             )}
           </button>
         )}
-        <pre className="code-block-pre">
-          <code>
-            {lines.map((line, idx) => (
-              <span key={idx} className="code-line">
-                {shouldShowPrompt && (
-                  <span className="code-prompt-symbol" aria-hidden="true">
-                    $&nbsp;
-                  </span>
-                )}
-                <span className="code-line-text">{line}</span>
-                {idx < lines.length - 1 ? '\n' : ''}
-              </span>
-            ))}
-          </code>
-        </pre>
       </div>
     </div>
   );
