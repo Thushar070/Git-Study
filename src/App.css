@@ -2884,7 +2884,8 @@
   border: 1px solid var(--border-subtle);
   color: var(--text-primary);
   font-weight: 500;
-  white-space: nowrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 /* ── Callout Components ────────────────────────────────── */
