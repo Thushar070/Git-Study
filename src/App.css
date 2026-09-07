@@ -2772,6 +2772,130 @@
   line-height: 1.5;
 }
 
+/* ── Inline Code ───────────────────────────────────────── */
+.inline-code {
+  display: inline;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ── Callout Components ────────────────────────────────── */
+.callout {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background-color: var(--bg-card);
+  margin-bottom: var(--space-4);
+}
+
+.callout-icon-wrapper {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.callout-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.callout-title {
+  font-size: var(--font-sm);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.callout-body {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.callout-info {
+  border-color: rgba(56, 189, 248, 0.2);
+  background-color: rgba(56, 189, 248, 0.04);
+}
+
+.callout-info .callout-icon-wrapper {
+  color: #38bdf8;
+}
+
+.callout-warning {
+  border-color: var(--color-amber-border);
+  background-color: var(--color-amber-bg);
+}
+
+.callout-warning .callout-icon-wrapper {
+  color: var(--color-amber);
+}
+
+.callout-danger {
+  border-color: var(--color-red-border);
+  background-color: var(--color-red-bg);
+}
+
+.callout-danger .callout-icon-wrapper {
+  color: var(--color-red);
+}
+
+.callout-tip {
+  border-color: var(--color-green-border);
+  background-color: var(--color-green-bg);
+}
+
+.callout-tip .callout-icon-wrapper {
+  color: var(--color-green);
+}
+
+.callout-success {
+  border-color: var(--color-green-border);
+  background-color: var(--color-green-bg);
+}
+
+.callout-success .callout-icon-wrapper {
+  color: var(--color-green);
+}
+
+/* ── Output Block ──────────────────────────────────────── */
+.output-block {
+  margin-top: var(--space-3);
+}
+
+.output-block-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-xs);
+  font-weight: 700;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-2);
+}
+
+.output-block-pre {
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: var(--font-xs);
+  color: var(--text-secondary);
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.6;
+}
+
 /* ── Command Detail Component Styles ───────────────────── */
 .info-card {
   padding: var(--space-5);
